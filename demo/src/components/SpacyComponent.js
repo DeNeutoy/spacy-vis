@@ -120,7 +120,7 @@ class SpacyParserInput extends React.Component {
         </div>
 
         <div className="form__field">
-          <label htmlFor="#input--parser-sentence">Sentence</label>
+          <label htmlFor="#input--parser-sentence">Sentence or Document for Parsing</label>
           <input onChange={this.handleSentenceChange} value={spacyParserSentenceValue} id="input--parser-sentence" ref="spacyParserSentence" type="text" required="true" autoFocus="true" placeholder="E.g. &quot;John likes and Bill hates ice cream.&quot;" />
         </div>
         <div className="form__field form__field--btn">
@@ -135,13 +135,48 @@ class SpacyParserInput extends React.Component {
   <HierplaneVisualisation /> Component
 *******************************************************************************/
 
-
 class HierplaneVisualization extends React.Component {
+  constructor(...args) {
+    super(...args);
+    this.state = { selectedIdx: 0 };
+
+    this.selectNextTree = this.selectNextTree.bind(this);
+    this.selectPrevTree = this.selectPrevTree.bind(this);
+  }
+  selectPrevTree() {
+    const nextIdx =
+        this.state.selectedIdx === 0 ? this.props.trees.length - 1 : this.state.selectedIdx - 1;
+    this.setState({ selectedIdx: nextIdx });
+  }
+  selectNextTree() {
+    const nextIdx =
+        this.state.selectedIdx === this.props.trees.length - 1 ? 0 : this.state.selectedIdx + 1;
+    this.setState({ selectedIdx: nextIdx });
+  }
+
   render() {
-    if (this.props.tree) {
+    if (this.props.trees) {
+      const totalSentenceCount = this.props.trees.length;
+      const selectedSentenceIdxLabel = this.state.selectedIdx + 1;
+
       return (
         <div className="hierplane__visualization">
-          <Tree tree={this.props.tree} theme="light" />
+          <div className="hierplane__visualization-verbs">
+            <a className="hierplane__visualization-verbs__prev" onClick={this.selectPrevTree}>
+              <svg width="12" height="12">
+                <use xlinkHref="#icon__disclosure"></use>
+              </svg>
+            </a>
+            <a onClick={this.selectNextTree}>
+              <svg width="12" height="12">
+                <use xlinkHref="#icon__disclosure"></use>
+              </svg>
+            </a>
+            <span className="hierplane__visualization-verbs__label">
+              Sentence {selectedSentenceIdxLabel} of {totalSentenceCount}
+            </span>
+          </div>
+          <Tree tree={this.props.trees[this.state.selectedIdx]["tree"]} theme="light" />
         </div>
       )
     } else {
@@ -149,6 +184,22 @@ class HierplaneVisualization extends React.Component {
     }
   }
 }
+
+
+
+// class HierplaneVisualization extends React.Component {
+//   render() {
+//     if (this.props.tree) {
+//       return (
+//         <div className="hierplane__visualization">
+//           <Tree tree={this.props.tree} theme="light" />
+//         </div>
+//       )
+//     } else {
+//       return null;
+//     }
+//   }
+// }
 
 /*******************************************************************************
   <SpacyParserComponent /> Component
@@ -213,7 +264,7 @@ class _SpacyComponent extends React.Component {
             sentence={sentence} />
         </PaneTop>
         <PaneBottom outputState={this.state.outputState}>
-          <HierplaneVisualization tree={responseData ? responseData.tree : null} />
+          <HierplaneVisualization trees={responseData ? responseData : null} />
         </PaneBottom>
       </div>
     );

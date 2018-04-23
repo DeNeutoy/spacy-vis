@@ -23,6 +23,7 @@ def build_hierplane_tree(tree: spacy.tokens.Span) -> Dict[str, Any]:
     -------
     A JSON dictionary render-able by Hierplane for the given tree.
     """
+
     def node_constuctor(node: spacy.tokens.Token):
         children = []
         for child in node.children:
@@ -81,6 +82,11 @@ def get_model_desc(nlp, model_name):
     return '{} - {} (v{})'.format(lang_name, model_name, model_version)
 
 
+def collapse_noun_phrases(document: spacy.tokens.Doc) -> None:
+    for np in list(document.noun_chunks):
+        np.merge(tag=np.root.tag_, lemma=np.root.lemma_,
+                    ent_type=np.root.ent_type_)
+
 @hug.get('/models')
 def models():
     return {name: get_model_desc(nlp, name) for name, nlp in MODELS.items()}
@@ -91,17 +97,21 @@ def annotate(text: str, model: str, collapse_phrases: bool=False):
 
     nlp = MODELS[model]
     doc = nlp(text)
-    if collapse_phrases:
-        for np in list(doc.noun_chunks):
-            np.merge(tag=np.root.tag_, lemma=np.root.lemma_,
-                        ent_type=np.root.ent_type_)
+    trees = []
+    for sentence in doc.sents:
+        sentence_text = " ".join([x.text for x in sentence])
+        # This is a little convoluted because we can't parse the
+        # sentences twice because otherwise Spacy segfaults,
+        # but we need the indices to be relative to the sentence
+        # only for Hierplane.
+        new_sentence = nlp(sentence_text)
+        if collapse_phrases:
+            collapse_noun_phrases(new_sentence)
 
-    sentence = next(doc.sents)
-
-    return {
-        "sentence": " ".join([str(x) for x in sentence]),
-        "tree": build_hierplane_tree(sentence)
-        }
+        tree = build_hierplane_tree(next(new_sentence.sents))
+        trees.append({"tree": tree, "sentence": sentence_text})
+    
+    return trees
 
 
 @hug.post('/dep')
