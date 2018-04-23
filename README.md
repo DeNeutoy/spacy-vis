@@ -7,7 +7,7 @@ To run the demo using Docker, run:
 docker run -p 8080:8080 -p 3000:3000  -it spacy-vis bash bin/serve
 ```
 
-<p align="center"><img width="100%" src="img/example.png" /></p>
+<p align="center"><img width="100%" src="img/example.gif" /></p>
 
 ## Installing and running locally
 First, make sure you have a relatively new version of `npm` installed on your
