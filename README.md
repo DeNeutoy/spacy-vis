@@ -22,9 +22,6 @@ Now you can build the application.
 npm run build
 ```
 
-Built assets are placed in the `build` subfolder, which the Sanic server is
-configured to use.
-
 Now to run the demo, run the following.
 
 ```
