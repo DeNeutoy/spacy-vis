@@ -17,38 +17,38 @@ MODELS = {
 }
 
 
-def build_hierplane_tree(tree: spacy.tokens.Doc, is_root: bool) -> Dict[str, Any]:
+def build_hierplane_tree(tree: spacy.tokens.Doc) -> Dict[str, Any]:
     """
     Returns
     -------
     A JSON dictionary render-able by Hierplane for the given tree.
     """
-    children = []
-    if is_root:
-        node = tree.root
-    else:
-        node = tree
+    def node_constuctor(node):
+        children = []
+        for child in node.children:
+            children.append(node_constuctor(child))
 
-    for child in node.children:
-        children.append(build_hierplane_tree(child, is_root=False))
-
-    label = node.dep_
-    span = " ".join([str(x) for x in node.subtree])
-    hierplane_node = {
-            "word": span,
-            "nodeType": label,
-            "attributes": [label],
-            "link": label
-    }
-    if children:
-        hierplane_node["children"] = children
-
-    if is_root:
+        label = node.dep_
+        span = node.text
+        char_span_start = tree[node.i: node.i + 1].start_char
+        char_span_end = tree[node.i: node.i + 1].end_char
         hierplane_node = {
-                "text": span,
-                "root": hierplane_node
+                "word": span,
+                "nodeType": label,
+                "attributes": [label],
+                "link": label,
+                "spans": [{"start": char_span_start,
+                           "end": char_span_end}]
         }
-    return hierplane_node
+        if children:
+            hierplane_node["children"] = children
+        return hierplane_node
+
+    hierplane_tree = {
+            "text": str(tree),
+            "root": node_constuctor(tree.root)
+    }
+    return hierplane_tree
 
 
 def get_model_desc(nlp, model_name):
@@ -78,7 +78,7 @@ def annotate(text: str, model: str, collapse_phrases: bool=False):
 
     return {
         "sentence": " ".join([str(x) for x in sentence]),
-        "tree": build_hierplane_tree(sentence, is_root=True)
+        "tree": build_hierplane_tree(sentence)
         }
 
 
