@@ -28,15 +28,25 @@ def build_hierplane_tree(tree: spacy.tokens.Doc) -> Dict[str, Any]:
         for child in node.children:
             children.append(node_constuctor(child))
 
-        label = node.dep_
         span = node.text
         char_span_start = tree[node.i: node.i + 1].start_char
         char_span_end = tree[node.i: node.i + 1].end_char
+
+        attributes = [node.pos_]
+
+        if node.ent_iob_ == "B":
+            attributes.append(node.ent_type_)
+
+        if node.like_email:
+            attributes.append("email")
+        if node.like_url:
+            attributes.append("url")
+
         hierplane_node = {
                 "word": span,
-                "nodeType": label,
-                "attributes": [label],
-                "link": label,
+                "nodeType": node.dep_,
+                "attributes": attributes,
+                "link": node.dep_,
                 "spans": [{"start": char_span_start,
                            "end": char_span_end}]
         }
