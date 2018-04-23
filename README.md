@@ -1,3 +1,8 @@
+## Spacy Dependency Parse Visualisation
+
+<p align="center"><img width="40%" src="img/example.png" /></p>
+
+
 ## Building and running the demo
 
 First, make sure you have a relatively new version of `npm` installed on your
