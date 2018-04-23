@@ -1,6 +1,5 @@
 ## Spacy Dependency Parse Visualisation
-
-<p align="center"><img width="40%" src="img/example.png" /></p>
+<p align="center"><img width="100%" src="img/example.png" /></p>
 
 
 ## Building and running the demo
