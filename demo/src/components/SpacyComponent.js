@@ -107,7 +107,7 @@ class SpacyParserInput extends React.Component {
 
         <div className="form__instructions"><span> Choose Spacy model: </span>
           <select disabled={outputState === "working"} onChange={this.handleSpacyModelChange}>
-            <option>Spacy model ...</option>
+            <option>English - Default</option>
             {spacyModels.map((sentence, index) => {
               return (
                 <option value={index} key={index}>{sentence}</option>
@@ -115,7 +115,7 @@ class SpacyParserInput extends React.Component {
             })}
           </select>
         </div>
-        <div className="form__instructions"><span>Merge Noun Phrases</span>
+        <div className="form__instructions"><span>Merge Noun Phrases:</span>
           <input type="checkbox" onChange={this.handleMergeNpOption}></input>
         </div>
 

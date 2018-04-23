@@ -1,4 +1,4 @@
-## Spacy Dependency Parse Visualisation
+## Visualise Spacy Models with Hierplane!
 
 ## Building and running the demo
 

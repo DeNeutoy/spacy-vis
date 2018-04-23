@@ -17,21 +17,28 @@ MODELS = {
 }
 
 
-def build_hierplane_tree(tree: spacy.tokens.Doc) -> Dict[str, Any]:
+def build_hierplane_tree(tree: spacy.tokens.Span) -> Dict[str, Any]:
     """
     Returns
     -------
     A JSON dictionary render-able by Hierplane for the given tree.
     """
-    def node_constuctor(node):
+    def node_constuctor(node: spacy.tokens.Token):
         children = []
         for child in node.children:
             children.append(node_constuctor(child))
 
         span = node.text
+        # These character spans define what word is highlighted
+        # by Hierplane. For intermediate nodes, the spans
+        # are composed and the union of them is highlighted.
         char_span_start = tree[node.i: node.i + 1].start_char
         char_span_end = tree[node.i: node.i + 1].end_char
 
+        # These are the icons which show up in the bottom right
+        # corner of the node. We can add anything here,
+        # but for brevity we'll just add NER and a few
+        # other things.
         attributes = [node.pos_]
 
         if node.ent_iob_ == "B":
@@ -44,9 +51,14 @@ def build_hierplane_tree(tree: spacy.tokens.Doc) -> Dict[str, Any]:
 
         hierplane_node = {
                 "word": span,
+                # The type of the node - all nodes with the same
+                # type have a unified colour.
                 "nodeType": node.dep_,
+                # Attributes of the node, eg PERSON or "email".
                 "attributes": attributes,
+                # The link between  the node and it's parent.
                 "link": node.dep_,
+                # The span to highlight in the sentence.
                 "spans": [{"start": char_span_start,
                            "end": char_span_end}]
         }
