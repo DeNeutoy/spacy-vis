@@ -177,7 +177,7 @@ class _SpacyComponent extends React.Component {
                    model: inputs.spacyModel,
                   };
 
-    if (inputs.mergeNp == true) {
+    if (inputs.mergeNp === true) {
       payload.collapse_phrases = true
     }
 

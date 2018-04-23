@@ -1,0 +1,4 @@
+#!/bin/bash
+
+python displacy/app.py & cd demo && npm run start && fg
+
