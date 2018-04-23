@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/hierplane@0.0.9/dist/static/hierplane.min.css">
+    <link rel="manifest" href="manifest.json">
+    <title>Spacy Visualiser</title>
+  </head>
+  <body>
+    <noscript>
+      You need to enable JavaScript to run this app.
+    </noscript>
+    <div id="root"></div>
+    <svg id="icons" xmlns="http://www.w3.org/2000/svg">
+      <symbol id="icon__empty" viewBox="0 0 96 58">
+        <path d="M48,0.3C25,0.3,5.7,13.7,0,29c5.7,15.3,25,28.7,48,28.7S90.3,44.3,96,29C90.3,13.7,71,0.3,48,0.3z M48,47C38,47,30,39,30,29 c0-10,8.1-18,18-18c10,0,18,8.1,18,18C66,39,58,47,48,47z M48,22.1c-3.8,0-6.9,3.1-6.9,6.9s3.1,6.9,6.9,6.9s6.9-3.1,6.9-6.9 S51.8,22.1,48,22.1z"></path>
+      </symbol>
+      <symbol id="icon__error" viewBox="0 0 50 50">
+        <path d="M49.3,39.8l-20-34.7c-0.9-1.5-2.5-2.5-4.3-2.5c-1.8,0-3.4,1-4.3,2.5l-20,34.7c-0.9,1.5-0.9,3.4,0,5 c0.9,1.5,2.5,2.5,4.3,2.5h40c1.8,0,3.4-1,4.3-2.5C50.2,43.3,50.2,41.4,49.3,39.8z M25,40.9c-1.5,0-2.8-1.2-2.8-2.8 c0-1.5,1.2-2.8,2.8-2.8s2.8,1.2,2.8,2.8C27.8,39.7,26.5,40.9,25,40.9z M27.8,29.2c0,1.5-1.2,2.8-2.8,2.8s-2.8-1.2-2.8-2.8V17.6 c0-1.5,1.2-2.8,2.8-2.8s2.8,1.2,2.8,2.8V29.2z"/>
+      </symbol>
+      <symbol id="icon__disclosure" viewBox="0 0 7 12">
+        <polygon points="0.7,12 0,11.3 5.5,6 0,0.7 0.7,0 7,6"></polygon>
+      </symbol>
+      <symbol id="icon__help" viewBox="0 0 17 17">
+        <path d="M8.5,0C3.8,0,0,3.8,0,8.5S3.8,17,8.5,17S17,13.2,17,8.5S13.2,0,8.5,0z M9.8,13.8c0,0.2-0.1,0.3-0.3,0.3H7.6 c-0.2,0-0.3-0.1-0.3-0.3V12c0-0.2,0.1-0.3,0.3-0.3h1.9c0.2,0,0.3,0.1,0.3,0.3V13.8z M11.6,7.5c-0.2,0.3-0.5,0.6-1,1l-0.4,0.3 C9.9,8.9,9.8,9.1,9.7,9.3c0,0.1-0.1,0.3-0.1,0.7c0,0.2-0.1,0.3-0.3,0.3H7.7c-0.1,0-0.1,0-0.2-0.1C7.4,10.1,7.4,10,7.4,10 c0-0.7,0.1-1.3,0.2-1.6c0.1-0.3,0.4-0.7,1-1.1L9,6.9c0.1-0.1,0.2-0.2,0.3-0.3C9.5,6.4,9.6,6.2,9.6,6c0-0.3-0.1-0.5-0.2-0.7 C9.2,5.1,8.9,5,8.5,5S7.9,5.1,7.7,5.4C7.5,5.6,7.4,5.9,7.4,6.3c0,0.2-0.1,0.3-0.3,0.3H5.3c-0.1,0-0.1,0-0.2-0.1C5,6.4,5,6.3,5,6.2 c0.1-1.3,0.5-2.3,1.4-2.8c0.5-0.3,1.2-0.5,2-0.5c1,0,1.9,0.2,2.6,0.7c0.7,0.5,1.1,1.3,1.1,2.3C12,6.5,11.9,7,11.6,7.5z"></path>
+      </symbol>
+     <symbol id="icon__working" viewBox="0 0 26 26">
+        <defs>
+          <linearGradient id="icon__working__gradient" gradientUnits="userSpaceOnUse" x1="13" y1="23.4326" x2="13" y2="2.5674">
+            <stop offset="0" class="icon__working__gradient__stop icon__working__gradient__stop--stop1"></stop>
+            <stop offset="0.1757" class="icon__working__gradient__stop icon__working__gradient__stop--stop2"></stop>
+            <stop offset="0.2047" class="icon__working__gradient__stop icon__working__gradient__stop--stop3"></stop>
+            <stop offset="0.5615" class="icon__working__gradient__stop icon__working__gradient__stop--stop4"></stop>
+            <stop offset="0.6235" class="icon__working__gradient__stop icon__working__gradient__stop--stop5"></stop>
+            <stop offset="1" class="icon__working__gradient__stop icon__working__gradient__stop--stop6"></stop>
+          </linearGradient>
+        </defs>
+        <path d="M13,3.6c5.2,0,9.4,4.2,9.4,9.4s-4.2,9.4-9.4,9.4S3.6,18.2,3.6,13S7.8,3.6,13,3.6 M13,2.6 C7.2,2.6,2.6,7.2,2.6,13S7.2,23.4,13,23.4S23.4,18.8,23.4,13S18.8,2.6,13,2.6L13,2.6z" class="icon__working__path"></path>
+      </symbol>
+      </svg>
+  </body>
+</html>
+
