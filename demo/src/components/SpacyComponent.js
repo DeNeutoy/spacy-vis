@@ -31,7 +31,11 @@ const title = "Spacy Visualizer";
 const description = (
   <span>
     <span>
-      A visualiser for Spacy annotations.
+      A visualiser for Spacy annotations. This visualisation uses the
+    </span>
+    <a href="https://allenai.github.io/hierplane/" target="_blank" rel="noopener noreferrer">{' '} Hierplane Library </a>
+    <span>
+      to render the dependency parse from Spacy's models. It also includes visualisation of entities and POS tags within nodes.
     </span>
   </span>
 );
@@ -42,11 +46,13 @@ class SpacyParserInput extends React.Component {
 
     this.state = { 
       sentenceValue: "",
-      spacyModelValue: "en_core_web_sm"
+      spacyModelValue: "en_core_web_sm",
+      mergeNpValue: false
   };
     this.handleListChange = this.handleListChange.bind(this);
     this.handleSentenceChange = this.handleSentenceChange.bind(this);
     this.handleSpacyModelChange = this.handleSpacyModelChange.bind(this);
+    this.handleMergeNpOption = this.handleMergeNpOption.bind(this);
   }
 
   handleListChange(e) {
@@ -59,9 +65,15 @@ class SpacyParserInput extends React.Component {
 
   handleSpacyModelChange(e) {
       this.setState({
-        spacyModelValue: spacyModels[e.target.value],
+        spacyModelValue: spacyModels[e.target.value]
     })
   };
+
+  handleMergeNpOption(e) {
+    this.setState({
+      mergeNpValue: !this.state.mergeNpValue,
+  })
+};
 
   handleSentenceChange(e) {
     this.setState({
@@ -70,18 +82,18 @@ class SpacyParserInput extends React.Component {
   }
 
   render() {
-    const { spacyParserSentenceValue, spacyModelValue} = this.state;
+    const { spacyParserSentenceValue, spacyModelValue, mergeNpValue} = this.state;
     const { outputState, getAnnotations } = this.props;
 
     const modelInputs = {
       "sentenceValue": spacyParserSentenceValue,
-      "spacyModel": spacyModelValue
+      "spacyModel": spacyModelValue,
+      "mergeNp": mergeNpValue
     };
 
     return (
       <div className="model__content">
         <ModelIntro title={title} description={description} />
-
         <div className="form__instructions"><span>Enter text or</span>
           <select disabled={outputState === "working"} onChange={this.handleListChange}>
             <option>Choose an example...</option>
@@ -93,7 +105,7 @@ class SpacyParserInput extends React.Component {
           </select>
         </div>
 
-        <div className="form__instructions"><span>Enter text or</span>
+        <div className="form__instructions"><span> Choose Spacy model: </span>
           <select disabled={outputState === "working"} onChange={this.handleSpacyModelChange}>
             <option>Spacy model ...</option>
             {spacyModels.map((sentence, index) => {
@@ -102,6 +114,9 @@ class SpacyParserInput extends React.Component {
               );
             })}
           </select>
+        </div>
+        <div className="form__instructions"><span>Merge Noun Phrases</span>
+          <input type="checkbox" onChange={this.handleMergeNpOption}></input>
         </div>
 
         <div className="form__field">
@@ -159,7 +174,12 @@ class _SpacyComponent extends React.Component {
     this.setState({outputState: "working"});
 
     var payload = {text: inputs.sentenceValue,
-                   model: inputs.spacyModel};
+                   model: inputs.spacyModel,
+                  };
+
+    if (inputs.mergeNp == true) {
+      payload.collapse_phrases = true
+    }
 
     fetch(`${API_ROOT}/annotate`, {
       method: 'POST',

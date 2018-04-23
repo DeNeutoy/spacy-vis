@@ -65,15 +65,14 @@ def models():
 
 
 @hug.post('/annotate')
-def annotate(text: str, model: str, collapse_punctuation: bool=False,
-        collapse_phrases: bool=False):
+def annotate(text: str, model: str, collapse_phrases: bool=False):
 
     nlp = MODELS[model]
     doc = nlp(text)
     if collapse_phrases:
-        for np in list(doc.noun_chunks):
-            np.merge(tag=np.root.tag_, lemma=np.root.lemma_,
-                     ent_type=np.root.ent_type_)
+for np in list(doc.noun_chunks):
+    np.merge(tag=np.root.tag_, lemma=np.root.lemma_,
+                ent_type=np.root.ent_type_)
 
     sentence = next(doc.sents)
 
