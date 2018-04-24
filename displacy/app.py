@@ -1,6 +1,7 @@
 # coding: utf8
 from __future__ import unicode_literals
 
+import os
 from typing import Dict, Any
 import hug
 from hug_middleware_cors import CORSMiddleware
@@ -110,7 +111,7 @@ def annotate(text: str, model: str, collapse_phrases: bool=False):
 
         tree = build_hierplane_tree(next(new_sentence.sents))
         trees.append({"tree": tree, "sentence": sentence_text})
-    
+
     return trees
 
 
@@ -137,7 +138,25 @@ def ent(text: str, model: str):
             for ent in doc.ents]
 
 
-if __name__ == '__main__':
+dir_path = os.path.dirname(os.path.realpath(__file__))
+print(dir_path)
+build_dir = dir_path + '/../demo/build'
+print(build_dir)
+
+@hug.static('/')
+def static_root():
+    return (build_dir,)
+
+@hug.static('/spacy-parser')
+def static_model():
+    return (build_dir,)
+
+@hug.static('/static/js')
+def static_js():
+    return (build_dir + "/static/js",)
+
+
+if __name__ == "__main__":
     import waitress
     app = hug.API(__name__)
     app.http.add_middleware(CORSMiddleware(app))

@@ -12,8 +12,7 @@ const origin = window && window.location && window.location.origin;
 if (origin === 'http://localhost:3000') {
     apiRoot = 'http://localhost:8080';
 } else {
-    apiRoot = 'http://localhost:8080';
-    //apiRoot = origin;
+    apiRoot = origin;
 }
 
 export const API_ROOT = apiRoot;

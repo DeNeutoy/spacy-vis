@@ -4,7 +4,7 @@
 
 To run the demo using Docker, run:
 ```
-docker run -p 8080:8080 -p 3000:3000  -it markn/spacy-vis bash bin/serve
+docker run -p 8080:8080 -it markn/spacy-vis bash bin/serve
 ```
 
 <p align="center"><img width="100%" src="img/example.gif" /></p>

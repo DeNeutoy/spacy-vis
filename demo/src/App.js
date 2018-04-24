@@ -15,7 +15,7 @@ const App = () => (
       <Route exact path="/" render={() => (
         <Redirect to={DEFAULT_PATH}/>
       )}/>
-      <Route path="/:model/:slug?" component={Demo}/>
+      <Route path="/:model" component={Demo}/>
     </div>
   </Router>
 )
@@ -25,10 +25,9 @@ class Demo extends React.Component {
     super(props);
 
     // React router supplies us with a model name and (possibly) a slug.
-    const { model, slug } = props.match.params;
+    const { model } = props.match.params;
 
     this.state = {
-      slug: slug,
       selectedModel: model,
       requestData: null,
       responseData: null
@@ -55,8 +54,8 @@ class Demo extends React.Component {
 
   // We also need to update the state whenever we receive new props from React router.
   componentWillReceiveProps({ match }) {
-    const { model, slug } = match.params;
-    this.setState({selectedModel: model, slug: slug});
+    const { model } = match.params;
+    this.setState({selectedModel: model});
   }
 
   render() {

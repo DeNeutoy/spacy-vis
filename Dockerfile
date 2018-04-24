@@ -34,10 +34,8 @@ COPY demo/ demo/
 RUN cd demo && npm install && npm run build && cd ..
 COPY bin/ bin/
 
-# Spacy service port
+# Demo port
 EXPOSE 8080
-# Frontend demo port
-EXPOSE 3000
 
 
 CMD ["/bin/bash"]
