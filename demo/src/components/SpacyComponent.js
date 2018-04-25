@@ -121,7 +121,7 @@ class SpacyParserInput extends React.Component {
 
         <div className="form__field">
           <label htmlFor="#input--parser-sentence">Sentence or Document for Parsing</label>
-          <input onChange={this.handleSentenceChange} value={spacyParserSentenceValue} id="input--parser-sentence" ref="spacyParserSentence" type="text" required="true" autoFocus="true" placeholder="E.g. &quot;John likes and Bill hates ice cream.&quot;" />
+          <textarea onChange={this.handleSentenceChange} value={spacyParserSentenceValue} id="input--parser-sentence" ref="spacyParserSentence" type="text" required="true" autoFocus="true" placeholder="E.g. &quot;John likes and Bill hates ice cream.&quot;" />
         </div>
         <div className="form__field form__field--btn">
           <Button enabled={outputState !== "working"} outputState={outputState} runModel={getAnnotations} inputs={modelInputs} />
@@ -184,22 +184,6 @@ class HierplaneVisualization extends React.Component {
     }
   }
 }
-
-
-
-// class HierplaneVisualization extends React.Component {
-//   render() {
-//     if (this.props.tree) {
-//       return (
-//         <div className="hierplane__visualization">
-//           <Tree tree={this.props.tree} theme="light" />
-//         </div>
-//       )
-//     } else {
-//       return null;
-//     }
-//   }
-// }
 
 /*******************************************************************************
   <SpacyParserComponent /> Component

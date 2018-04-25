@@ -139,9 +139,7 @@ def ent(text: str, model: str):
 
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
-print(dir_path)
 build_dir = dir_path + '/../demo/build'
-print(build_dir)
 
 @hug.static('/')
 def static_root():

@@ -1,5 +1,5 @@
 /**
- * The backend always runs on port 9000. In production we also
+ * The backend always runs on port 8080. In production we also
  * serve the frontend from there. However, for development
  * we want to `npm run serve` the unminified js on port 3000.
  * This allows us to get the correct API root either way.
