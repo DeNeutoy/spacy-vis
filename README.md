@@ -7,6 +7,9 @@ To run the demo using Docker, run:
 docker run -p 8080:8080 -it markn/spacy-vis bash bin/serve
 ```
 
+and then navigate to `localhost:8080` in your browser. The docker image is
+quite large, because it contains all of the spacy Models.
+
 <p align="center"><img width="100%" src="img/example.gif" /></p>
 
 ## Installing and running locally
