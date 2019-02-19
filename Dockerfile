@@ -1,4 +1,4 @@
-FROM python:3.6.3-jessie
+FROM python:3.6.7-jessie
 
 ENV LC_ALL=C.UTF-8
 ENV LANG=C.UTF-8
@@ -6,20 +6,8 @@ ENV LANG=C.UTF-8
 WORKDIR /stage
 
 # Install base packages.
-RUN apt-get update --fix-missing && apt-get install -y \
-    bzip2 \
-    ca-certificates \
-    curl \
-    gcc \
-    git \
-    libc-dev \
-    libglib2.0-0 \
-    libsm6 \
-    libxext6 \
-    libxrender1 \
-    wget \
-    libevent-dev \
-    build-essential && \
+RUN apt-get update --fix-missing && \
+    apt-get install -y curl && \
     rm -rf /var/lib/apt/lists/*
 
 # Install npm
@@ -37,5 +25,4 @@ COPY bin/ bin/
 # Demo port
 EXPOSE 8080
 
-
-CMD ["/bin/bash"]
+CMD ["bin/serve"]
