@@ -4,7 +4,7 @@
 
 To run the demo using Docker, run:
 ```
-docker run -p 8080:8080 -it markn/spacy-vis bash bin/serve
+docker run -p 8080:8080 -it markn/spacy-vis
 ```
 
 and then navigate to `localhost:8080` in your browser. The docker image is
@@ -41,7 +41,7 @@ pip install -r displacy/requirements.txt
 Now to run the demo, run the following.
 
 ```
-bash bin/serve
+./bin/serve
 ```
 
 You may need to force refresh your web browser.
