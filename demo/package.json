@@ -8,7 +8,7 @@
     "react-dom": "^15.6.1",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.0.13",
-    "serve": "6.5.6"
+    "serve": "10.1.2"
   },
   "scripts": {
     "start": "react-scripts start",
